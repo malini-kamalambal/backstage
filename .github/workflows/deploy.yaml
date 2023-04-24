@@ -7,7 +7,7 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  IMAGE: '285565080433.dkr.ecr.eu-west-2.amazonaws.com/backstage'
+  IMAGE: 285565080433.dkr.ecr.eu-west-2.amazonaws.com/backstage
 
 jobs:
   deploy:
@@ -25,12 +25,11 @@ jobs:
       - run: yarn build:all
       - run: yarn build-image
 
-      - run: docker tag backstage $IMAGE:$TAG
-      - run: echo $password | docker login --username "$username" --password-stdin "$registry"
+      - run: echo $password | docker login --username "$username" --password-stdin 285565080433.dkr.ecr.eu-west-2.amazonaws.com
         env:
-          registry: ${{ secrets.ECR_REGISTRY }}
           username: ${{ secrets.ECR_USER }}
           password: ${{ secrets.ECR_PASS }}
+      - run: docker tag backstage $IMAGE:$TAG
       - run: docker push $IMAGE:$TAG
 
       # inform humanitec
