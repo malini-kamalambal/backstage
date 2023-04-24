@@ -26,8 +26,13 @@ jobs:
       # - run: yarn build-image
 
       # - run: docker tag backstage $IMAGE:$TAG
-      - uses: docker/login-action@v2
-        with:
+      # - uses: docker/login-action@v2
+      #   with:
+      #     registry: ${{ secrets.ECR_REGISTRY }}
+      #     username: ${{ secrets.ECR_USER }}
+      #     password: ${{ secrets.ECR_PASS }}
+      - run: echo $password | docker login --username "$username" --password-stdin "$registry"
+        env:
           registry: ${{ secrets.ECR_REGISTRY }}
           username: ${{ secrets.ECR_USER }}
           password: ${{ secrets.ECR_PASS }}
