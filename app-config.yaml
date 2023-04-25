@@ -74,3 +74,8 @@ catalog:
       target: ../../templates/score-example/template.yaml
       rules:
         - allow: [Template]
+
+humanitec:
+  orgId: htc-demo-01
+  token: ${HUMANITEC_TOKEN}
+  registryUrl: 285565080433.dkr.ecr.eu-west-2.amazonaws.com
