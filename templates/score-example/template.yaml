@@ -35,6 +35,9 @@ spec:
               - humanitec-poc-org-8367
 
   steps:
+    - name: Read Environment
+      id: environment
+      action: backend:get-environment
     - id: fetch-base
       name: Fetch Base
       action: fetch:template
@@ -42,8 +45,9 @@ spec:
         url: ./content
         values:
           name: ${{ parameters.componentName }}
-          ecr: 285565080433.dkr.ecr.eu-west-2.amazonaws.com
+          registryUrl: ${{ steps.environment.output.registryUrl }}
           image: myapp
+          orgId: ${{ steps.environment.output.orgId }}
 
     - id: publish
       name: Publish
@@ -54,12 +58,11 @@ spec:
         description: This is ${{ parameters.componentName }}
         repoUrl: ${{ parameters.repoUrl }}
 
-    # - id: humanitec-create-app
-    #   name: Create Humanitec App
-    #   action: humanitec:create-app
-    #   input:
-    #     appId: ${{ parameters.componentName }}
-      # # comes from humanitec backend plugin
+    - id: humanitec-create-app
+      name: Create Humanitec App
+      action: humanitec:create-app
+      input:
+        appId: ${{ parameters.componentName }}
 
     - id: register
       name: Register
