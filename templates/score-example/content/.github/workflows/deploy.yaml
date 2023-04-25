@@ -5,7 +5,7 @@ on:
     branches: main
 
 env:
-  ECR: ${{ values.ecr }}
+  ECR: ${{ values.registryUrl }}
   IMAGE: ${{ values.image }}
 
 jobs:
@@ -14,31 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: volta-cli/action@v3
-
       - name: Set Tag with SHA
         run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
-      
-      - run: echo $TAG
-
-      - run: yarn
-      - run: yarn tsc
-      - run: yarn build:all
-      - run: yarn build-image
 
       - run: |
           aws ecr get-login-password --region eu-west-2 \
             | docker login \
                 --username $username \
                 --password-stdin \
-                ${{ values.ecr }}
+                ${{ values.registryUrl }}
         env:
           username: ${{ secrets.ECR_USER }}
           password: ${{ secrets.ECR_PASS }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - run: docker tag backstage $ECR/$IMAGE:$TAG
+      - run: docker build --platform linux/amd64 . -t $ECR/$IMAGE:$TAG
       - run: docker push $ECR/$IMAGE:$TAG
 
 # notify humanitec
