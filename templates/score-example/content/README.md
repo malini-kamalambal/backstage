@@ -1,4 +1,4 @@
-# Score - ${{ values.name }}
+# Score - ${{ values.name | capitalize }}
 
 A simple score project deploying a hello world app.
 
