@@ -1,0 +1,45 @@
+name: Deploy ${{ values.name | capitalize }}
+
+on:
+  push:
+    branches: main
+
+env:
+  ECR: ${{ values.ecr }}
+  REPO: ${{ values.ecr }}/${{ values.image }}
+  IMAGE: ${{ values.image }}
+
+jobs:
+  deploy:
+    name: Build & Notify Humanitec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v3
+
+      - name: Set Tag with SHA
+        run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
+      
+      - run: echo $TAG
+
+      - run: yarn
+      - run: yarn tsc
+      - run: yarn build:all
+      - run: yarn build-image
+
+      - run: |
+          aws ecr get-login-password --region eu-west-2 \
+            | docker login \
+                --username $username \
+                --password-stdin \
+                ${{ values.ecr }}
+        env:
+          username: ${{ secrets.ECR_USER }}
+          password: ${{ secrets.ECR_PASS }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - run: docker tag backstage $REPO/$IMAGE:$TAG
+      - run: docker push $REPO/$IMAGE:$TAG
+
+# notify humanitec
