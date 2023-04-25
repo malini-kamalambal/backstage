@@ -8,7 +8,6 @@ concurrency: ${{ github.ref }}
 
 env:
   ECR: 285565080433.dkr.ecr.eu-west-2.amazonaws.com
-  REPO: 285565080433.dkr.ecr.eu-west-2.amazonaws.com/backstage
   IMAGE: backstage
 
 jobs:
@@ -39,7 +38,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - run: docker tag backstage $REPO/$IMAGE:$TAG
-      - run: docker push $REPO/$IMAGE:$TAG
+      - run: docker tag backstage $ECR/$IMAGE:$TAG
+      - run: docker push $ECR/$IMAGE:$TAG
 
       # notify humanitec
