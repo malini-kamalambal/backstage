@@ -7,37 +7,39 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  image: 285565080433.dkr.ecr.eu-west-2.amazonaws.com/backstage/backstage
+  ECR: 285565080433.dkr.ecr.eu-west-2.amazonaws.com
+  REPO: 285565080433.dkr.ecr.eu-west-2.amazonaws.com/backstage
+  IMAGE: backstage
 
 jobs:
   deploy:
     name: Build & Notify Humanitec
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v3
-      # - uses: volta-cli/action@v3
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v3
 
-      # - name: Set Tag with SHA
-      #   run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
+      - name: Set Tag with SHA
+        run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
 
-      # - run: yarn
-      # - run: yarn tsc
-      # - run: yarn build:all
-      # - run: yarn build-image
+      - run: yarn
+      - run: yarn tsc
+      - run: yarn build:all
+      - run: yarn build-image
 
       - run: |
           aws ecr get-login-password --region eu-west-2 \
             | docker login \
                 --username $username \
                 --password-stdin \
-                285565080433.dkr.ecr.eu-west-2.amazonaws.com
+                $ECR
         env:
           username: ${{ secrets.ECR_USER }}
           password: ${{ secrets.ECR_PASS }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      # - run: docker tag backstage $IMAGE:$TAG
-      # - run: docker push $IMAGE:$TAG
 
-      # inform humanitec
-        # org_id, humanitec_token
+      - run: docker tag backstage $REPO/$IMAGE:$TAG
+      - run: docker push $REPO/$IMAGE:$TAG
+
+      # notify humanitec
