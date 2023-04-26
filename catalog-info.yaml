@@ -1,11 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: backstage # 🔴 name-of-application-workload
+  name: backstage
   description: An example of a Backstage application.
-  # annotations:
-  #   "humanitec.com/orgId": "htc-demo-01"
-  #   "humanitec.com/appId": "demo"
+  annotations:
+    "humanitec.com/orgId": "htc-demo-01"
+    "humanitec.com/appId": "backstage"
 spec:
   type: website
   owner: john@example.com
