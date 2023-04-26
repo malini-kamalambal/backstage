@@ -3,7 +3,9 @@ name: Deploy ${{ values.name | capitalize }}
 on:
   push:
     branches: main
-
+{% raw %}
+concurrency: ${{ github.ref }}
+{% endraw %}
 env:
   ECR: ${{ values.registryUrl }}
   IMAGE: ${{ values.image }}
