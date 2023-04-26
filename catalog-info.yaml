@@ -8,5 +8,5 @@ metadata:
     "humanitec.com/appId": "backstage"
 spec:
   type: website
-  owner: john@example.com
+  owner: user:guest
   lifecycle: experimental
