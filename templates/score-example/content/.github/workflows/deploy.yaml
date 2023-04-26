@@ -49,5 +49,11 @@ jobs:
           wget https://github.com/score-spec/score-humanitec/releases/download/0.4.0/score-humanitec_0.4.0_linux_amd64.tar.gz
           tar -xvzf ./score-humanitec_0.4.0_linux_amd64.tar.gz
 
-          ./score-humanitec delta --env development --app hello --org="${{ secrets.HUMANITEC_ORG_ID }}" --token "${{ secrets.HUMANITEC_TOKEN }}" --deploy
+          cat <<EOF > score-container-image.yaml
+          containers:
+            frontend:
+              image: $ECR/$IMAGE:$TAG
+          EOF
+
+          ./score-humanitec delta --env development --overrides ./score-container-image.yaml --app hello --org="${{ secrets.HUMANITEC_ORG_ID }}" --token "${{ secrets.HUMANITEC_TOKEN }}" --deploy
 {% endraw %}

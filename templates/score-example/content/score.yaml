@@ -13,7 +13,7 @@ service:
 # Define the containers that make up this service
 containers:
   frontend:
-    image: europe-west2-docker.pkg.dev/will-overton-gcp/demo/helloworld:latest
+    image: ${{ values.registryUrl }}/${{ values.image }}:dummy
     variables:
       PORT: "3000"
       DB_DATABASE: ${resources.db.name}
