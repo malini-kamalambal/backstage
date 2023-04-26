@@ -2,43 +2,6 @@
 id: ${{ values.name | dump}}
 name: ${{ values.name | dump}}
 
-environments:
-  development:
-    metadata:
-      env_id: development
-      name: Initial deployment
-
-    modules:
-      ${{values.name | dump}}:
-        externals:
-          http:
-            type: dns
-        profile: humanitec/default-module
-        spec:
-          containers:
-            ${{values.name | dump}}:
-              id: ${{ values.name }}
-              image: ${{ values.registryUrl }}/myapp:dummy
-              resources:
-                limits:
-                  cpu: 0.25
-                  memory: 256Mi
-                requests:
-                  cpu: 0.025
-                  memory: 64Mi
-              variables: {}
-              volume_mounts: {}
-              files: {}
-          ingress:
-            rules:
-              externals.http:
-                http:
-                  "/":
-                    port: 9898
-                    type: prefix
-
-# automations that will be created
-# see https://api-docs.humanitec.com/#tag/AutomationRule/paths/~1orgs~1{orgId}~1apps~1{appId}~1envs~1{envId}~1rules/post
 automations:
   development:
     - active: true
