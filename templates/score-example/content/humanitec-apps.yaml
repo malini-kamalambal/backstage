@@ -9,14 +9,14 @@ environments:
       name: Initial deployment
 
     modules:
-      ${{values.componentName | dump}}:
+      ${{values.name | dump}}:
         externals:
           http:
             type: dns
         profile: humanitec/default-module
         spec:
           containers:
-            ${{values.componentName | dump}}:
+            ${{values.name | dump}}:
               id: ${{ values.name }}
               image: ${{ values.registryUrl }}/myapp:dummy
               resources:
