@@ -41,7 +41,7 @@ jobs:
             --data-raw '{
                 "branch": "'$GITHUB_REF_NAME'",
                 "commit": "'$GITHUB_SHA'",
-                "image": "'$IMAGE:$TAG'",
+                "image": "'$ECR/$IMAGE:$TAG'",
                 "tags": ["'$TAG'"]
             }'
       - name: Deploy using Score
@@ -49,11 +49,20 @@ jobs:
           wget https://github.com/score-spec/score-humanitec/releases/download/0.4.0/score-humanitec_0.4.0_linux_amd64.tar.gz
           tar -xvzf ./score-humanitec_0.4.0_linux_amd64.tar.gz
 
-          cat <<EOF > score-container-image.yaml
+          cat <<EOF > humanitec.score.yaml
+          apiVersion: humanitec.org/v1b1
+          spec:
+            ingress:
+              rules:
+                "\${resources.dns}": # This is the DNS record that we defined in the resources section
+                  http:
+                    "/":
+                      type: prefix
+                      port: 80
           containers:
             frontend:
               image: $ECR/$IMAGE:$TAG
           EOF
 
-          ./score-humanitec delta --env development --overrides ./score-container-image.yaml --app hello --org="${{ secrets.HUMANITEC_ORG_ID }}" --token "${{ secrets.HUMANITEC_TOKEN }}" --deploy
+          ./score-humanitec delta --env development --overrides ./humanitec.score.yaml --app {% endraw %}${{ values.name }}{% raw %} --org="${{ secrets.HUMANITEC_ORG_ID }}" --token "${{ secrets.HUMANITEC_TOKEN }}" --deploy
 {% endraw %}
