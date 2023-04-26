@@ -3,12 +3,11 @@ apiVersion: score.dev/v1b1
 metadata:
   name: ${{ values.name | dump }}
 
-# Define the ports that this service exposes
 service:
   ports:
     www:
       port: 80 # The port that the service will be exposed on
-      targetPort: 3000 # The port that the container will be listening on
+      targetPort: 9898 # The port that the container will be listening on
 
 resources:
   dns: # We need a DNS record to point to the service 
