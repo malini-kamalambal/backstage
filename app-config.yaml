@@ -44,10 +44,14 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location]
   locations:
-    - type: url
-      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/catalog-info.yaml
+    - type: file
+      target: ../../catalog-info.yaml
     - type: file
       target: ../../templates/score-example/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../templates/podinfo-example/template.yaml
       rules:
         - allow: [Template]
 
