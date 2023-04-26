@@ -1,16 +1,8 @@
 app:
-  # Should be the same as backend.baseUrl when using the `app-backend` plugin.
   baseUrl: http://localhost:7007
 
 backend:
-  # Note that the baseUrl should be the URL that the browser and other clients
-  # should use when communicating with the backend, i.e. it needs to be
-  # reachable not just from within the backend host, but from all of your
-  # callers. When its value is "http://localhost:7007", it's strictly private
-  # and can't be reached by others.
   baseUrl: http://localhost:7007
-  # The listener can also be expressed as a single <host>:<port> string. In this case we bind to
-  # all interfaces, the most permissive setting. The right value depends on your specific deployment.
   listen: ':7007'
 
   database:
@@ -20,3 +12,14 @@ backend:
       port: ${POSTGRES_PORT}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+
+catalog:
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    - type: url
+      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/catalog-info.yaml
+    - type: url
+      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/templates/score-example/template.yaml
+      rules:
+        - allow: [Template]
