@@ -4,7 +4,8 @@ metadata:
   name: ${{ values.name | dump }}
   annotations:
     "humanitec.com/orgId": ${{ values.orgId | dump }}
-    "humanitec.com/appId": ${{ values.name | dump }}
+    "humanitec.com/appId": ${{ values.name | dump }}{% if values.techdocs %}
+    "backstage.io/techdocs-ref": dir:.{% endif %}
 spec:
   type: service
   owner: user:guest
