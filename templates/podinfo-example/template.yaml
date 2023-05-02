@@ -28,6 +28,10 @@ spec:
           title: Initialize TechDocs
           type: boolean
           default: false
+        apidocs:
+          title: API Docs
+          type: boolean
+          default: false
         repoUrl:
           title: Repository
           type: string
@@ -53,6 +57,7 @@ spec:
           image: myapp
           orgId: ${{ steps.environment.output.orgId }}
           techdocs: ${{ parameters.techdocs }}
+          apidocs: ${{ parameters.apidocs }}
 
     - id: publish
       name: Publish
