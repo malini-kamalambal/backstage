@@ -9,7 +9,7 @@ metadata:
 spec:
   type: service
   owner: user:guest
-  lifecycle: experimental{% if values.apidocs %}
+  lifecycle: experimental
   providesApis:
     - ${{ values.name }}
 ---
@@ -462,4 +462,3 @@ spec:
     - http
     - https
     swagger: "2.0"
-{% endif %}
