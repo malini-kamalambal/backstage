@@ -24,6 +24,10 @@ spec:
           ui:autofocus: true
           ui:options:
             rows: 5
+        techdocs:
+          title: Initialize TechDocs
+          type: boolean
+          default: false
         repoUrl:
           title: Repository
           type: string
@@ -48,6 +52,7 @@ spec:
           registryUrl: ${{ steps.environment.output.registryUrl }}
           image: myapp
           orgId: ${{ steps.environment.output.orgId }}
+          techdocs: ${{ parameters.techdocs }}
 
     - id: publish
       name: Publish

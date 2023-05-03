@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: podinfo-service-template
-  title: Podinfo Service Template
-  description: An example template that creates a simple Podinfo service
+  name: nodejs-service-template
+  title: NodeJS Service Template
+  description: An example template that creates a simple Hello World service
   tags:
     - score
     - humanitec
@@ -12,7 +12,7 @@ spec:
   type: service
 
   parameters:
-    - title: New Podinfo Service
+    - title: New NodeJS Service
       required:
         - componentName
         - repoUrl
