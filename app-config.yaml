@@ -45,13 +45,13 @@ catalog:
     - allow: [Component, System, API, Resource, Location]
   locations:
     - type: file
-      target: ../../catalog-info.yaml
+      target: ../../catalog-info-v2.yaml
     - type: file
-      target: ../../templates/score-example/template.yaml
+      target: ../../templates/score-example-v2/template.yaml
       rules:
         - allow: [Template]
     - type: file
-      target: ../../templates/podinfo-example/template.yaml
+      target: ../../templates/podinfo-example-v2/template.yaml
       rules:
         - allow: [Template]
 
