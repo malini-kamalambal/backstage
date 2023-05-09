@@ -27,7 +27,7 @@ jobs:
       - run: yarn build-image
 
       - run: |
-          aws ecr get-login-password --region eu-north-1 \
+          aws ecr get-login-password --region eu-west-3 \
             | docker login \
                 --username ${{ secrets.ECR_USER }} \
                 --password-stdin \
