@@ -29,8 +29,8 @@ jobs:
                 $ECR
         {% raw %}env:
           username: ${{ secrets.ECR_USER }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_POC_3 }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_POC_3 }}{% endraw %}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_POC_4 }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_POC_4 }}{% endraw %}
 
       - run: docker build --platform linux/amd64 . -t $ECR/$IMAGE:$TAG
       - run: docker push $ECR/$IMAGE:$TAG
@@ -38,8 +38,8 @@ jobs:
       - name: Inform Humanitec
         run: |-
           curl \
-            --request POST 'https://api.humanitec.io/orgs/${{ secrets.HUMANITEC_ORG_ID_POC_3 }}/images/myapp/builds' \
-            --header 'Authorization: Bearer ${{ secrets.HUMANITEC_TOKEN_POC_3 }}' \
+            --request POST 'https://api.humanitec.io/orgs/${{ secrets.HUMANITEC_ORG_ID_POC_4 }}/images/myapp/builds' \
+            --header 'Authorization: Bearer ${{ secrets.HUMANITEC_TOKEN_POC_4 }}' \
             --header 'Content-Type: application/json' \
             --data-raw '{
                 "branch": "'$GITHUB_REF_NAME'",
@@ -67,5 +67,5 @@ jobs:
               image: $ECR/$IMAGE:$TAG
           EOF
 
-          ./score-humanitec delta --env development --overrides ./humanitec.score.yaml --app {% endraw %}${{ values.name }}{% raw %} --org="${{ secrets.HUMANITEC_ORG_ID_POC_3 }}" --token "${{ secrets.HUMANITEC_TOKEN_POC_3 }}" --deploy
+          ./score-humanitec delta --env development --overrides ./humanitec.score.yaml --app {% endraw %}${{ values.name }}{% raw %} --org="${{ secrets.HUMANITEC_ORG_ID_POC_4 }}" --token "${{ secrets.HUMANITEC_TOKEN_POC_4 }}" --deploy
 {% endraw %}
