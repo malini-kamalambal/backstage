@@ -37,6 +37,7 @@ spec:
               - github.com
             allowedOwners:
               - humanitec-poc-org-8367
+              - humanitec-poc-org-8367/creditsuisse
 
   steps:
     - name: Read Environment
