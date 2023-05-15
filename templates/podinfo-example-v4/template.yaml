@@ -37,7 +37,6 @@ spec:
               - github.com
             allowedOwners:
               - humanitec-poc-org-8367
-              - humanitec-poc-org-8367/creditsuisse
 
   steps:
     - name: Read Environment
@@ -64,6 +63,9 @@ spec:
         description: This is ${{ parameters.componentName }}
         repoUrl: ${{ parameters.repoUrl }}
         repoVisibility: public
+        collaborators:
+            - access: admin
+              team: humanitec-poc-org-8367/creditsuisse
 
     - id: humanitec-create-app
       name: Create Humanitec App
