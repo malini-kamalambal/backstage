@@ -18,12 +18,12 @@ catalog:
     - allow: [Component, System, API, Resource, Location]
   locations:
     - type: url
-      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/catalog-info-v6.yaml
+      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/catalog-info-v5.yaml
     - type: url
-      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/templates/score-example-v6/template.yaml
+      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/templates/score-example-v5/template.yaml
       rules:
         - allow: [Template]
     - type: url
-      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/templates/podinfo-example-v6/template.yaml
+      target: https://github.com/humanitec-poc-org-8367/backstage/blob/main/templates/podinfo-example-v5/template.yaml
       rules:
         - allow: [Template]
