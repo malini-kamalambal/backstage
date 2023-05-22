@@ -7,7 +7,7 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  ECR: 561327397348.dkr.ecr.eu-north-1.amazonaws.com/backstage
+  ECR: 561327397348.dkr.ecr.eu-north-1.amazonaws.com
   IMAGE: backstage
 
 jobs:
