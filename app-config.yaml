@@ -56,6 +56,6 @@ catalog:
         - allow: [Template]
 
 humanitec:
-  orgId: htc-demo-07
+  orgId: htc-demo-007
   token: ${HUMANITEC_TOKEN}
   registryUrl: 278581741526.dkr.ecr.us-west-2.amazonaws.com
