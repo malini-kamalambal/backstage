@@ -1,0 +1,87 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: podinfo-service-template
+  title: Podinfo Service Template
+  description: An example template that creates a simple Podinfo service
+  tags:
+    - score
+    - humanitec
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: New Podinfo Service
+      required:
+        - componentName
+        - repoUrl
+      properties:
+        componentName:
+          title: Component Name
+          type: string
+          description: Unique name of the project
+          ui:autofocus: true
+          ui:options:
+            rows: 5
+        techdocs:
+          title: Initialize TechDocs
+          type: boolean
+          default: false
+        repoUrl:
+          title: Repository
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+            allowedOwners:
+              - humanitec-poc-org-8367
+              - humanitec-poc-org-8367/dhl
+
+  steps:
+    - name: Read Environment
+      id: environment
+      action: backend:get-environment
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          name: ${{ parameters.componentName }}
+          registryUrl: ${{ steps.environment.output.registryUrl }}
+          image: myapp
+          orgId: ${{ steps.environment.output.orgId }}
+          techdocs: ${{ parameters.techdocs }}
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        defaultBranch: main
+        description: This is ${{ parameters.componentName }}
+        repoUrl: ${{ parameters.repoUrl }}
+        repoVisibility: public
+
+    - id: humanitec-create-app
+      name: Create Humanitec App
+      action: humanitec:create-app
+      input:
+        appId: ${{ parameters.componentName }}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
