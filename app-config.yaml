@@ -45,17 +45,17 @@ catalog:
     - allow: [Component, System, API, Resource, Location]
   locations:
     - type: file
-      target: ../../catalog-info-v9.yaml
+      target: ../../catalog-info-v12.yaml
     - type: file
-      target: ../../templates/score-example-v9/template.yaml
+      target: ../../templates/score-example-v12/template.yaml
       rules:
         - allow: [Template]
     - type: file
-      target: ../../templates/podinfo-example-v9/template.yaml
+      target: ../../templates/podinfo-example-v12/template.yaml
       rules:
         - allow: [Template]
 
 humanitec:
-  orgId: htc-demo-09
+  orgId: htc-demo-12
   token: ${HUMANITEC_TOKEN}
-  registryUrl: 430567239489.dkr.ecr.us-east-1.amazonaws.com
+  registryUrl: 675957821105.dkr.ecr.us-east-1.amazonaws.com

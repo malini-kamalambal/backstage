@@ -1,0 +1,3 @@
+---
+id: ${{ values.name | dump}}
+name: ${{ values.name | dump}}
