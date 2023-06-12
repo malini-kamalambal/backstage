@@ -7,9 +7,9 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  ECR: 675957821105.dkr.ecr.us-east-1.amazonaws.com
+  ECR: 862579333725.dkr.ecr.us-east-2.amazonaws.com
   IMAGE: backstage
-  REGION: us-east-1
+  REGION: us-east-2
 
 jobs:
   deploy:
@@ -34,8 +34,8 @@ jobs:
                 --password-stdin \
                 $ECR
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_POC_12 }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_POC_12 }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_POC_10 }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_POC_10 }}
 
       - run: docker tag backstage $ECR/$IMAGE:$TAG
       - run: docker push $ECR/$IMAGE:$TAG
@@ -43,8 +43,8 @@ jobs:
       - name: Inform Humanitec
         run: |-
           curl \
-            --request POST 'https://api.humanitec.io/orgs/${{ secrets.HUMANITEC_ORG_ID_POC_12 }}/images/backstage/builds' \
-            --header 'Authorization: Bearer ${{ secrets.HUMANITEC_TOKEN_POC_12 }}' \
+            --request POST 'https://api.humanitec.io/orgs/${{ secrets.HUMANITEC_ORG_ID_POC_10 }}/images/backstage/builds' \
+            --header 'Authorization: Bearer ${{ secrets.HUMANITEC_TOKEN_POC_10 }}' \
             --header 'Content-Type: application/json' \
             --data-raw '{
                 "branch": "'$GITHUB_REF_NAME'",
